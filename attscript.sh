@@ -65,7 +65,7 @@ vrs2=$(sed -n '1 p' /tmp/att | sed -e 's/[^0-9]//ig')
   if [[ "$res" = s || "$res" = S ]];then
     echo -e "\n\033[1;32m  เริ่มอัปเดต..."
     sleep 3
-    wget https://github.com/MyGatherBk/Pandavpn/master/sshplus.sh > /dev/null 2>&1
+    wget https://raw.githubusercontent.com/MyGatherBk/Pandavpn/master/sshplus.sh > /dev/null 2>&1
     chmod +x sshplus.sh
     ./sshplus.sh
     clear

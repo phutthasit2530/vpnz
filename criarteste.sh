@@ -60,7 +60,7 @@ exit" > /etc/SSHPlus/userteste/$nome.sh
 chmod +x /etc/SSHPlus/userteste/$nome.sh
 at -f /etc/SSHPlus/userteste/$nome.sh now + $u_temp min > /dev/null 2>&1
 clear
-echo -e "\E[44;1;37m     Usuario Teste Criado     \E[0m"
+echo -e "\E[44;1;37m     สร้างผู้ใช้ทดสอบแล้ว     \E[0m"
 echo ""
 echo -e "\033[1;32mIP:\033[1;37m $IP"
 echo -e "\033[1;32mUsuario:\033[1;37m $nome"

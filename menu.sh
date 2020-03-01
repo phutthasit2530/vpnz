@@ -42,7 +42,7 @@ ${comando[1]} > /dev/null 2>&1
 touch $HOME/fim
  ) > /dev/null 2>&1 &
  tput civis
-echo -ne "  \033[1;33mAGUARDE \033[1;37m- \033[1;33m["
+echo -ne "  \033[1;33mWAIT \033[1;37m- \033[1;33m["
 while true; do
    for((i=0; i<18; i++)); do
    echo -ne "\033[1;31m#"
@@ -53,7 +53,7 @@ while true; do
    sleep 1s
    tput cuu1
    tput dl1
-   echo -ne "  \033[1;33mAGUARDE \033[1;37m- \033[1;33m["
+   echo -ne "  \033[1;33mWAIT \033[1;37m- \033[1;33m["
 done
 echo -e "\033[1;33m]\033[1;37m -\033[1;32m OK !\033[1;37m"
 tput cnorm
@@ -62,7 +62,7 @@ fun_tst () {
 speedtest --share > speed
 }
 echo ""
-echo -e "   \033[1;32mTESTANDO A VELOCIDADE DO SERVIDOR !\033[0m"
+echo -e "   \033[1;32mการทดสอบความเร็วเซิร์ฟเวอร์ !\033[0m"
 echo ""
 aguarde 'fun_tst'
 echo ""
@@ -81,7 +81,7 @@ rm -rf $HOME/speed
 #limiter
 function limit1 () {
    clear
-   echo -e "\n\033[1;32mINICIANDO O LIMITER... \033[0m"
+   echo -e "\n\033[1;32mการเริ่มขีด จำกัด... \033[0m"
    echo ""
    fun_bar 'screen -dmS limiter limiter' 'sleep 3'
    [[ $(grep -wc "limiter" /etc/autostart) = '0' ]] && {
@@ -90,13 +90,13 @@ function limit1 () {
        sed -i '/limiter/d' /etc/autostart
 	   echo -e "ps x | grep 'limiter' | grep -v 'grep' && echo 'ON' || screen -dmS limiter limiter" >> /etc/autostart
    }
-   echo -e "\n\033[1;32m  LIMITER ATIVO !\033[0m"
+   echo -e "\n\033[1;32m  ACTIVE LIMITER !\033[0m"
    sleep 3
    menu
 }
 function limit2 () {
    clear
-   echo -e "\033[1;32mPARANDO O LIMITER... \033[0m"
+   echo -e "\033[1;32mหยุดการ จำกัด... \033[0m"
    echo ""
    fun_stplimiter () {
       sleep 1
@@ -108,7 +108,7 @@ function limit2 () {
       sleep 1
    }
    fun_bar 'fun_stplimiter' 'sleep 3'
-   echo -e "\n\033[1;31m LIMITER PARADO !\033[0m"
+   echo -e "\n\033[1;31m หยุดขีด จำกัด !\033[0m"
    sleep 3
    menu
 }
@@ -119,19 +119,19 @@ function limit_ssh () {
 function autoexec () {
    if grep "menu;" /etc/profile > /dev/null; then
       clear
-      echo -e "\033[1;32mDESATIVANDO AUTO EXECUÇÃO\033[0m"
+      echo -e "\033[1;32mปิดใช้งาน RUN อัตโนมัติ\033[0m"
       offautmenu () {
          sed -i '/menu;/d' /etc/profile
       }
       echo ""
       fun_bar 'offautmenu'
       echo ""
-      echo -e "\033[1;31mAUTO EXECUÇÃO DESATIVADO!\033[0m"
+      echo -e "\033[1;31mปิดการใช้งานอัตโนมัติ!\033[0m"
       sleep 1.5s
       menu2
    else
       clear
-      echo -e "\033[1;32mATIVANDO AUTO EXECUÇÃO\033[0m"
+      echo -e "\033[1;32mเปิดใช้งานการเรียกใช้อัตโนมัติ\033[0m"
       autmenu () {
          grep -v "^menu;" /etc/profile > /tmp/tmpass && mv /tmp/tmpass /etc/profile
          echo "menu;" >> /etc/profile
@@ -139,7 +139,7 @@ function autoexec () {
       echo ""
       fun_bar 'autmenu'
       echo ""
-      echo -e "\033[1;32mAUTO EXECUÇÃO ATIVADO!\033[0m"
+      echo -e "\033[1;32mเปิดอัตโนมัติ!\033[0m"
       sleep 1.5s
       menu2
    fi
@@ -180,7 +180,7 @@ clear
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[41;1;37m               ⇱ SSHPLUS MANAGER ⇲                \E[0m"
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\033[1;32mSYSTEM          MEMÓRIA RAM      PROCESSADOR "
+echo -e "\033[1;32mSYSTEM          หน่วยความจำ RAM      PROCESSOR "
 echo -e "\033[1;31mOS: \033[1;37m$_system \033[1;31mTotal:\033[1;37m$_ram \033[1;31mNucleos: \033[1;37m$_core\033[0m"
 echo -e "\033[1;31mHour: \033[1;37m$_hora     \033[1;31mIn use: \033[1;37m$_usor \033[1;31mIn use: \033[1;37m$_usop\033[0m"
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -202,18 +202,18 @@ echo -e "\033[1;31m[\033[1;36m20\033[1;31m] \033[1;37m• \033[1;33mเพิ่
 echo ""
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo ""
-echo -ne "\033[1;32mOQUE DESEJA FAZER \033[1;33m?\033[1;31m?\033[1;37m : "; read x
+echo -ne "\033[1;32mคุณต้องการทำอะไร \033[1;33m?\033[1;31m?\033[1;37m : "; read x
 case "$x" in
    20)
    clear
    addhost
-   echo -ne "\n\033[1;31mENTER \033[1;33mpara retornar ao \033[1;32mMENU!\033[0m"; read
+   echo -ne "\n\033[1;31mENTER \033[1;33mเพื่อกลับไปที่ \033[1;32mMENU!\033[0m"; read
    menu2
    ;;
    21)
    clear
    delhost
-   echo -ne "\n\033[1;31mENTER \033[1;33mpara retornar ao \033[1;32mMENU!\033[0m"; read
+   echo -ne "\n\033[1;31mENTER \033[1;33mเพื่อกลับไปที่ \033[1;32mMENU!\033[0m"; read
    menu2
    ;;
    22)
@@ -250,13 +250,13 @@ case "$x" in
    menu
    ;;
    0|00)
-   echo -e "\033[1;31mSaindo...\033[0m"
+   echo -e "\033[1;31mการออกจาก...\033[0m"
    sleep 2
    clear
    exit;
    ;;
    *)
-   echo -e "\n\033[1;31mOpcao invalida !\033[0m"
+   echo -e "\n\033[1;31mตัวเลือกไม่ถูกต้อง !\033[0m"
    sleep 2
 esac
 }
@@ -293,11 +293,11 @@ clear
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[41;1;37m               ⇱ SSHPLUS MANAGER ⇲                \E[0m"
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\033[1;32mSISTEMA            MEMÓRIA RAM      PROCESSADOR "
+echo -e "\033[1;32mSISTEMA            หน่วยความจำ RAM      PROCESSOR "
 echo -e "\033[1;31mOS: \033[1;37m$_system \033[1;31mTotal:\033[1;37m$_ram \033[1;31mNucleos: \033[1;37m$_core\033[0m"
-echo -e "\033[1;31mHora: \033[1;37m$_hora     \033[1;31mEm uso: \033[1;37m$_usor \033[1;31mEm uso: \033[1;37m$_usop\033[0m"
+echo -e "\033[1;31mHora: \033[1;37m$_hora     \033[1;31mในการใช้งาน: \033[1;37m$_usor \033[1;31mในการใช้งาน จริง: \033[1;37m$_usop\033[0m"
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\033[1;32mOnlines:\033[1;37m $_onlin     \033[1;31mExpirados: \033[1;37m$_userexp \033[1;33mTotal: \033[1;37m$_tuser\033[0m"
+echo -e "\033[1;32mOnlines:\033[1;37m $_onlin     \033[1;31mที่หมดอายุแล้ว: \033[1;37m$_userexp \033[1;33mTotal: \033[1;37m$_tuser\033[0m"
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo ""
 echo -e "\033[1;31m[\033[1;36m01\033[1;31m] \033[1;37m• \033[1;33mสร้างผู้ใช้ \033[1;31m            [\033[1;36m11\033[1;31m] \033[1;37m• \033[1;33mSpeedtest \033[1;31m
@@ -313,18 +313,18 @@ echo -e "\033[1;31m[\033[1;36m01\033[1;31m] \033[1;37m• \033[1;33mสร้า
 echo ""
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo ""
-echo -ne "\033[1;32mOQUE DESEJA FAZER \033[1;33m?\033[1;31m?\033[1;37m : "; read x
+echo -ne "\033[1;32mคุณต้องการทำอะไร \033[1;33m?\033[1;31m?\033[1;37m : "; read x
 
 case "$x" in 
    1 | 01)
    clear
    criarusuario
-   echo -ne "\n\033[1;31mENTER \033[1;33mpara retornar ao \033[1;32mMENU!\033[0m"; read
+   echo -ne "\n\033[1;31mENTER \033[1;33mเพื่อกลับไปที่ \033[1;32mMENU!\033[0m"; read
    ;;
    2 | 02)
    clear
    criarteste
-   echo -ne "\n\033[1;31mENTER \033[1;33mpara retornar ao \033[1;32mMENU!\033[0m"; read
+   echo -ne "\n\033[1;31mENTER \033[1;33mเพื่อกลับไปที่ \033[1;32mMENU!\033[0m"; read
    ;;
    3 | 03)
    clear
@@ -334,7 +334,7 @@ case "$x" in
    4 | 04)
    clear
    sshmonitor
-   echo -ne "\n\033[1;31mENTER \033[1;33mpara retornar ao \033[1;32mMENU!\033[0m"; read
+   echo -ne "\n\033[1;31mENTER \033[1;33mเพื่อกลับไปที่ \033[1;32mMENU!\033[0m"; read
    ;;      
    5 | 05)
    clear
@@ -360,7 +360,7 @@ case "$x" in
    9 | 09)
    clear
    infousers
-   echo -ne "\n\033[1;31mENTER \033[1;33mpara retornar ao \033[1;32mMENU!\033[0m"; read
+   echo -ne "\n\033[1;31mENTER \033[1;33mเพื่อกลับไปที่\033[1;32mMENU!\033[0m"; read
    ;;
    10)
    conexao
@@ -369,7 +369,7 @@ case "$x" in
    11)
    clear
    velocity
-   echo -ne "\n\033[1;31mENTER \033[1;33mpara retornar ao \033[1;32mMENU!\033[0m"; read
+   echo -ne "\n\033[1;31mENTER \033[1;33mเพื่อกลับไปที่ \033[1;32mMENU!\033[0m"; read
    ;;
    12)
    clear
@@ -378,18 +378,18 @@ case "$x" in
    ;;
    13)
    clear
-   echo -e "\033[1;32mPARA SAIR CLICK CTRL + C\033[1;36m"
+   echo -e "\033[1;32mเพื่อออกเดินทาง CLICK CTRL + C\033[1;36m"
    sleep 4
    nload
    ;;
    14)
    clear
    otimizar
-   echo -ne "\n\033[1;31mENTER \033[1;33mpara retornar ao \033[1;32mMENU!\033[0m"; read
+   echo -ne "\n\033[1;31mENTER \033[1;33mเพื่อกลับไปที่ \033[1;32mMENU!\033[0m"; read
    ;;
    15)
    userbackup
-   echo -ne "\n\033[1;31mENTER \033[1;33mpara retornar ao \033[1;32mMENU!\033[0m"; read
+   echo -ne "\n\033[1;31mENTER \033[1;33mเพื่อกลับไปที่ \033[1;32mMENU!\033[0m"; read
    ;;
    16)
    limit_ssh
@@ -402,19 +402,19 @@ case "$x" in
    18)
    clear
    detalhes
-   echo -ne "\n\033[1;31mENTER \033[1;33mpara retornar ao \033[1;32mMENU!\033[0m"; read
+   echo -ne "\n\033[1;31mENTER \033[1;33mเพื่อกลับไปที่\033[1;32mMENU!\033[0m"; read
    ;;
    19)
    menu2
    ;;
    0 | 00)
-   echo -e "\033[1;31mSaindo...\033[0m"
+   echo -e "\033[1;31mGoing out...\033[0m"
    sleep 2
    clear
    exit;
    ;;
    *)
-   echo -e "\n\033[1;31mOpcao invalida !\033[0m"
+   echo -e "\n\033[1;31mตัวเลือกไม่ถูกต้อง !\033[0m"
    sleep 2
 esac
 done

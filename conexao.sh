@@ -544,23 +544,23 @@ fi
 fun_openvpn () {
 
 if readlink /proc/$$/exe | grep -qs "dash"; then
-	echo "This script needs to be run with bash, not sh"
+	echo "สคริปต์นี้ต้องรันด้วย bash ไม่ใช่ sh"
 	exit 1
 fi
 
 if [[ "$EUID" -ne 0 ]]; then
-	echo "Execulte como root"
+	echo "เรียกใช้เป็นราก root"
 	exit 2
 fi
 
 if [[ ! -e /dev/net/tun ]]; then
-	echo -e "\033[1;31mTUN TAP NAO DISPONIVEL\033[0m"
+	echo -e "\033[1;31mTUN TAP ใช้งานไม่ได้\033[0m"
 	sleep 2
 	exit 3
 fi
 
 if grep -qs "CentOS release 5" "/etc/redhat-release"; then
-	echo "CentOS 5 is too old and not supported"
+	echo "CentOS 5 เก่าเกินไปและไม่รองรับ"
 	exit 4
 fi
 if [[ -e /etc/debian_version ]]; then
@@ -626,31 +626,31 @@ if [[ -e /etc/openvpn/server.conf ]]; then
 		echo ""
 		echo -e "\033[1;33mPORTA\033[1;37m: \033[1;32m$opnp"
 		echo ""
-		echo -e "\033[1;31m[\033[1;36m1\033[1;31m] \033[1;37m• \033[1;33mALTERAR PORTA"
-		echo -e "\033[1;31m[\033[1;36m2\033[1;31m] \033[1;37m• \033[1;33mREMOVER OPENVPN"
+		echo -e "\033[1;31m[\033[1;36m1\033[1;31m] \033[1;37m• \033[1;33mเปลี่ยนพอร์ต"
+		echo -e "\033[1;31m[\033[1;36m2\033[1;31m] \033[1;37m• \033[1;33mTO REMOVE OPENVPN"
 		echo -e "\033[1;31m[\033[1;36m3\033[1;31m] \033[1;37m• \033[1;33mOVPN VIA LINK $ovpnweb"
 		echo -e "\033[1;31m[\033[1;36m4\033[1;31m] \033[1;37m• \033[1;33mMULTILOGIN OVPN $mult"
-		echo -e "\033[1;31m[\033[1;36m5\033[1;31m] \033[1;37m• \033[1;33mALTERAR HOST DNS"
-		echo -e "\033[1;31m[\033[1;36m0\033[1;31m] \033[1;37m• \033[1;33mVOLTAR"
+		echo -e "\033[1;31m[\033[1;36m5\033[1;31m] \033[1;37m• \033[1;33mCHANGE DNS HOST "
+		echo -e "\033[1;31m[\033[1;36m0\033[1;31m] \033[1;37m• \033[1;33mCOME BACK"
 		echo ""
-		echo -ne "\033[1;32mOQUE DESEJA FAZER \033[1;33m?\033[1;31m?\033[1;37m "; read option
+		echo -ne "\033[1;32mWHAT DO YOU WANT TO DO\033[1;33m?\033[1;31m?\033[1;37m "; read option
 		case $option in
 			1) 
 			clear
-			echo -e "\E[44;1;37m         ALTERAR PORTA OPENVPN         \E[0m"
+			echo -e "\E[44;1;37m         CHANGE OPENVPN PORT        \E[0m"
 			echo ""
-			echo -e "\033[1;33mPORTA EM USO: \033[1;32m$opnp"
+			echo -e "\033[1;33mพอร์ตในการใช้งาน: \033[1;32m$opnp"
 			echo ""
-			echo -ne "\033[1;32mQUAL PORTA DESEJA UTILIZAR \033[1;33m?\033[1;37m "; read porta
+			echo -ne "\033[1;32mพอร์ตที่คุณต้องการใช้ \033[1;33m?\033[1;37m "; read porta
 			if [[ -z "$porta" ]]; then
 				echo ""
-				echo -e "\033[1;31mPorta invalida!"
+				echo -e "\033[1;31mพอร์ตไม่ถูกต้อง!"
 				sleep 3
 				fun_conexao
 			fi
 			verif_ptrs
 			echo ""
-			echo -e "\033[1;32mALTERANDO A PORTA OPENVPN!\033[1;33m"
+			echo -e "\033[1;32mAการเปลี่ยนพอร์ต OPENVPN!\033[1;33m"
 			echo ""
 			fun_opn () {
 			var_ptovpn=$(sed -n '1 p' /etc/openvpn/server.conf)
@@ -663,13 +663,13 @@ if [[ -e /etc/openvpn/server.conf ]]; then
 		    }
 		    fun_bar 'fun_opn'
 		    echo ""
-		    echo -e "\033[1;32mPORTA ALTERADA COM SUCESSO!\033[1;33m"
+		    echo -e "\033[1;32mพอร์ตเปลี่ยนเป็นสำเร็จ!\033[1;33m"
 		    sleep 3
 		    fun_conexao
 			;;
 			2) 
 			echo ""
-			echo -ne "\033[1;32mDESEJA REMOVER O OPENVPN \033[1;31m? \033[1;33m[s/n]:\033[1;37m "; read REMOVE
+			echo -ne "\033[1;32mต้องการลบ OPENVPN \033[1;31m? \033[1;33m[s/n]:\033[1;37m "; read REMOVE
 			if [[ "$REMOVE" = 's' ]]; then
 				rmv_open () {
 				PORT=$(grep '^port ' /etc/openvpn/server.conf | cut -d " " -f 2)
@@ -710,16 +710,16 @@ if [[ -e /etc/openvpn/server.conf ]]; then
 				rm -rf /usr/share/doc/openvpn*
 			    }
 			    echo ""
-			    echo -e "\033[1;32mREMOVENDO O OPENVPN!\033[0m"
+			    echo -e "\033[1;32mกำลังลบ OPENVPN!\033[0m"
 			    echo ""
 			    fun_bar 'rmv_open'
 				echo ""
-				echo -e "\033[1;32mOPENVPN REMOVIDO COM SUCESSO!\033[0m"
+				echo -e "\033[1;32mOPENVPN has been successfully removed.!\033[0m"
 				sleep 3
 				fun_conexao
 			else
 				echo ""
-				echo -e "\033[1;31mRetornando...\033[0m"
+				echo -e "\033[1;31mกำลังกลับคืน...\033[0m"
 				sleep 2
 				fun_conexao
 			fi
@@ -746,7 +746,7 @@ if [[ -e /etc/openvpn/server.conf ]]; then
                 		done
                 		tput cnorm
                 	}
-                	echo -ne "\033[1;31mDESATIVANDO\033[1;32m.\033[1;33m.\033[1;31m. \033[1;33m"
+                	echo -ne "\033[1;31mปิดการใช้งาน\033[1;32m.\033[1;33m.\033[1;31m. \033[1;33m"
                 	helice
                 	echo -e "\e[1DOk"
                 }
@@ -783,7 +783,7 @@ if [[ -e /etc/openvpn/server.conf ]]; then
                 		done
                 		tput cnorm
                 	}
-                	echo -ne "\033[1;32mATIVANDO\033[1;32m.\033[1;33m.\033[1;31m. \033[1;33m"
+                	echo -ne "\033[1;32mการเปิดใช้\033[1;32m.\033[1;33m.\033[1;31m. \033[1;33m"
                 	helice
                 	echo -e "\e[1DOk"
                 }
@@ -816,7 +816,7 @@ if [[ -e /etc/openvpn/server.conf ]]; then
                 		tput cnorm
                 	}
                 	echo ""
-                	echo -ne "\033[1;31mBLOQUEANDO MULTILOGIN\033[1;32m.\033[1;33m.\033[1;31m. \033[1;33m"
+                	echo -ne "\033[1;31mการปิดกั้น MULTILOGIN\033[1;32m.\033[1;33m.\033[1;31m. \033[1;33m"
                 	helice
                 	echo -e "\e[1DOk"
                 }
@@ -847,7 +847,7 @@ if [[ -e /etc/openvpn/server.conf ]]; then
                 		tput cnorm
                 	}
                 	echo ""
-                	echo -ne "\033[1;32mPERMITINDO MULTILOGIN\033[1;32m.\033[1;33m.\033[1;31m. \033[1;33m"
+                	echo -ne "\033[1;32mอนุญาตให้ MULTILOGIN\033[1;32m.\033[1;33m.\033[1;31m. \033[1;33m"
                 	helice
                 	echo -e "\e[1DOk"
                 }
@@ -858,23 +858,23 @@ if [[ -e /etc/openvpn/server.conf ]]; then
             ;;
             5)
             clear
-            echo -e "\E[44;1;37m         ALTERAR HOST DNS           \E[0m"
+            echo -e "\E[44;1;37m         เปลี่ยน DNS โฮสต์          \E[0m"
 			echo ""
-			echo -e "\033[1;31m[\033[1;36m1\033[1;31m] \033[1;37m• \033[1;33mADICIONAR HOST DNS"
-			echo -e "\033[1;31m[\033[1;36m2\033[1;31m] \033[1;37m• \033[1;33mREMOVER HOST DNS"
-			echo -e "\033[1;31m[\033[1;36m3\033[1;31m] \033[1;37m• \033[1;33mEDITAR MANUALMENTE"
-			echo -e "\033[1;31m[\033[1;36m0\033[1;31m] \033[1;37m• \033[1;33mVOLTAR"
+			echo -e "\033[1;31m[\033[1;36m1\033[1;31m] \033[1;37m• \033[1;33mเพิ่มโฮสต์ DNS"
+			echo -e "\033[1;31m[\033[1;36m2\033[1;31m] \033[1;37m• \033[1;33mลบโฮสต์ DNS"
+			echo -e "\033[1;31m[\033[1;36m3\033[1;31m] \033[1;37m• \033[1;33mแก้ไขด้วยตนเอง"
+			echo -e "\033[1;31m[\033[1;36m0\033[1;31m] \033[1;37m• \033[1;33mกลับ"
 			echo ""
-			echo -ne "\033[1;32mOQUE DESEJA FAZER \033[1;33m?\033[1;31m?\033[1;37m "; read resp
+			echo -ne "\033[1;32mคุณต้องการทำอะไร \033[1;33m?\033[1;31m?\033[1;37m "; read resp
 			if [[ -z "$resp" ]]; then
 				echo ""
-				echo -e "\033[1;31mOpcao invalida!"
+				echo -e "\033[1;31mตัวเลือกไม่ถูกต้อง!"
 				sleep 3
 				fun_openvpn
 			fi
 			if [[ "$resp" = '1' ]]; then
 				clear
-				echo -e "\E[44;1;37m            Adicionar Host DNS            \E[0m"
+				echo -e "\E[44;1;37m            เพิ่มโฮสต์ DNS           \E[0m"
 				echo ""
 				echo -e "\033[1;33mLista dos hosts atuais:\033[0m "
 				echo ""
@@ -883,28 +883,28 @@ if [[ -e /etc/openvpn/server.conf ]]; then
 					echo -e "\033[1;32m$_host"
 				done
 				echo ""
-				echo -ne "\033[1;33mDigite o host a ser adicionado\033[1;37m : " ; read host
+				echo -ne "\033[1;33mป้อนโฮสต์ที่จะเพิ่ม\033[1;37m : " ; read host
 				if [[ -z $host ]]; then
 					echo ""
-					echo -e "\E[41;1;37m        Campo Vazio ou invalido !       \E[0m"
+					echo -e "\E[41;1;37m        ช่องว่างหรือไม่ถูกต้อง !       \E[0m"
 					sleep 2
 					fun_openvpn
 				fi
 				if [[ "$(grep -w "$host" /etc/hosts | wc -l)" -gt "0" ]] ; then
-					echo -e "\E[41;1;37m    Esse host ja está adicionado  !    \E[0m"
+					echo -e "\E[41;1;37m    โฮสต์นี้ถูกเพิ่มแล้ว  !    \E[0m"
 					sleep 2
 					fun_openvpn
 				fi
 				sed -i "3i\127.0.0.1 $host" /etc/hosts
 				echo ""
-				echo -e "\E[44;1;37m      Host adicionado com sucesso !      \E[0m"
+				echo -e "\E[44;1;37m      เพิ่มโฮสต์สำเร็จแล้ว !      \E[0m"
 			    sleep 2
 			    fun_openvpn
 			elif [[ "$resp" = '2' ]]; then
 				clear
-				echo -e "\E[44;1;37m            Remover Host DNS            \E[0m"
+				echo -e "\E[44;1;37m            ลบโฮสต์ DNS            \E[0m"
 				echo ""
-				echo -e "\033[1;33mLista dos hosts atuais:\033[0m "
+				echo -e "\033[1;33mรายชื่อโฮสต์ปัจจุบัน:\033[0m "
 				echo ""
 				i=0
 				for _host in `grep -w "127.0.0.1" /etc/hosts | grep -v "localhost" | cut -d' ' -f2`; do
@@ -915,10 +915,10 @@ if [[ -e /etc/openvpn/server.conf ]]; then
 					echo -e "\033[1;33m[\033[1;31m$i\033[1;33m] \033[1;37m- \033[1;32m$_host\033[0m"
 				done
 				echo ""
-				echo -ne "\033[1;32mSelecione o host a ser removido \033[1;33m[\033[1;37m1\033[1;31m-\033[1;37m$i\033[1;33m]\033[1;37m: " ; read option
+				echo -ne "\033[1;32mเลือกโฮสต์ที่จะลบ \033[1;33m[\033[1;37m1\033[1;31m-\033[1;37m$i\033[1;33m]\033[1;37m: " ; read option
 				if [[ -z $option ]]; then
 					echo ""
-					echo -e "\E[41;1;37m          Opcao invalida  !        \E[0m"
+					echo -e "\E[41;1;37m         ตัวเลือกไม่ถูกต้อง  !        \E[0m"
 					sleep 2
 					fun_openvpn
 				fi
@@ -926,27 +926,27 @@ if [[ -e /etc/openvpn/server.conf ]]; then
 				hst=$(grep -v "127.0.0.1 $host" /etc/hosts)
 				echo "$hst" > /etc/hosts
 				echo ""
-				echo -e "\E[41;1;37m      Host removido com sucesso !      \E[0m"
+				echo -e "\E[41;1;37m      ลบโฮสต์เรียบร้อยแล้ว !      \E[0m"
 			    sleep 2
 			    fun_openvpn
 			elif [[ "$resp" = '3' ]]; then
-			    echo -e "\n\033[1;32mALTERANDO ARQUIVO \033[1;37m/etc/hosts\033[0m"
-			    echo -e "\n\033[1;31mATENCAO!\033[0m"
-			    echo -e "\n\033[1;33mPARA SALVAR USE AS TECLAS \033[1;32mctrl x y\033[0m"
+			    echo -e "\n\033[1;32mเปลี่ยนคลังเก็บ \033[1;37m/etc/hosts\033[0m"
+			    echo -e "\n\033[1;31mความสนใจ!\033[0m"
+			    echo -e "\n\033[1;33mเพื่อประหยัดการใช้คีย์ \033[1;32mctrl x y\033[0m"
 			    sleep 4
 			    clear
 			    nano /etc/hosts
-			    echo -e "\n\033[1;32mALTERADO COM SUCESSO!\033[0m"
+			    echo -e "\n\033[1;32mเปลี่ยนเป็นผลสำเร็จ!\033[0m"
 			    sleep 3
 			    fun_openvpn
 			elif [[ "$resp" = '0' ]]; then
 				echo ""
-				echo -e "\033[1;31mRetornando...\033[0m"
+				echo -e "\033[1;31mกลับคืน...\033[0m"
 				sleep 2
 				fun_conexao
 			else
 				echo ""
-				echo -e "\033[1;31mOpcao invalida !\033[0m"
+				echo -e "\033[1;31mตัวเลือกไม่ถูกต้อง !\033[0m"
 				sleep 2
 				fun_openvpn
 			fi
@@ -956,52 +956,52 @@ if [[ -e /etc/openvpn/server.conf ]]; then
             ;;
             *)
             echo ""
-            echo -e "\033[1;31mOpcao invalida !\033[0m"
+            echo -e "\033[1;31mตัวเลือกไม่ถูกต้อง !\033[0m"
             sleep 2
             fun_openvpn
 		esac
 	done
 else
 	clear
-	echo -e "\E[44;1;37m              INSTALADOR OPENVPN               \E[0m"
+	echo -e "\E[44;1;37m              OPENVPN INSTALLER               \E[0m"
 	echo ""
 	# OpenVPN instalador e criação do primeiro usuario
-	echo -e "\033[1;33mRESPONDA AS QUESTOES PARA INICIAR A INSTALACAO"
+	echo -e "\033[1;33mตอบคำถามเพื่อเริ่มการติดตั้ง"
 	echo ""
-	echo -ne "\033[1;32mPARA CONTINUAR CONFIRME SEU IP: \033[1;37m"; read -e -i $IP IP
+	echo -ne "\033[1;32mเพื่อดำเนินการยืนยันของคุณต่อไป IP: \033[1;37m"; read -e -i $IP IP
 	if [[ -z "$IP" ]]; then
 				echo ""
-				echo -e "\033[1;31mIP invalido!"
+				echo -e "\033[1;31mIP โมฆะ!"
 				sleep 3
 				fun_conexao
 	fi
 	echo ""
-	read -p "$(echo -e "\033[1;32mQUAL PORTA DESEJA UTILIZAR? \033[1;37m")" -e -i 1194 porta
+	read -p "$(echo -e "\033[1;32mที่คุณต้องการใช้? \033[1;37m")" -e -i 1194 porta
 	if [[ -z "$porta" ]]; then
 				echo ""
-				echo -e "\033[1;31mPorta invalida!"
+				echo -e "\033[1;31mพอร์ตไม่ถูกต้อง!"
 				sleep 3
 				fun_conexao
 	fi
 	echo ""
-	echo -e "\033[1;33mVERIFICANDO PORTA..."
+	echo -e "\033[1;33mตรวจสอบพอร์ต..."
 	sleep 2
 	verif_ptrs $porta
 	echo ""
-	echo -e "\033[1;31m[\033[1;36m1\033[1;31m] \033[1;33mSistema"
-	echo -e "\033[1;31m[\033[1;36m2\033[1;31m] \033[1;33mGoogle (\033[1;32mRecomendado\033[1;33m)"
+	echo -e "\033[1;31m[\033[1;36m1\033[1;31m] \033[1;33mระบบ"
+	echo -e "\033[1;31m[\033[1;36m2\033[1;31m] \033[1;33mGoogle (\033[1;32mแนะนำ\033[1;33m)"
 	echo -e "\033[1;31m[\033[1;36m3\033[1;31m] \033[1;33mOpenDNS"
 	echo -e "\033[1;31m[\033[1;36m4\033[1;31m] \033[1;33mCloudflare"
 	echo -e "\033[1;31m[\033[1;36m5\033[1;31m] \033[1;33mHurricane Electric"
 	echo -e "\033[1;31m[\033[1;36m6\033[1;31m] \033[1;33mVerisign"
 	echo -e "\033[1;31m[\033[1;36m7\033[1;31m] \033[1;33mDNS Performace\033[0m"
 	echo ""
-	read -p "$(echo -e "\033[1;32mQUAL DNS DESEJA UTILIZAR? \033[1;37m")" -e -i 2 DNS
+	read -p "$(echo -e "\033[1;32mคุณต้องการใช้ DNS อะไร? \033[1;37m")" -e -i 2 DNS
 	echo ""
 	echo -e "\033[1;31m[\033[1;36m1\033[1;31m] \033[1;33mUDP"
-	echo -e "\033[1;31m[\033[1;36m2\033[1;31m] \033[1;33mTCP (\033[1;32mRecomendado\033[1;33m)"
+	echo -e "\033[1;31m[\033[1;36m2\033[1;31m] \033[1;33mTCP (\033[1;32mแนะนำ\033[1;33m)"
 	echo ""
-	read -p "$(echo -e "\033[1;32mQUAL PROTOCOLO DESEJA UTILIZAR NO OPENVPN ? \033[1;37m")" -e -i 2 resp
+	read -p "$(echo -e "\033[1;32mโพรโทคอลที่คุณต้องการใช้ใน OPENVPN ? \033[1;37m")" -e -i 2 resp
 	if [[ "$resp" = '1' ]]; then
 		PROTOCOL=udp
 	elif [[ "$resp" = '2' ]]; then
@@ -1011,7 +1011,7 @@ else
 	fi
 	echo ""
 	if [[ "$OS" = 'debian' ]]; then
-		echo -e "\033[1;32mATUALIZANDO O SISTEMA"
+		echo -e "\033[1;32mการปรับปรุงระบบ"
 		echo ""
 		fun_attos () {
 		apt-get update-y
@@ -1019,7 +1019,7 @@ else
 	    }
 	    fun_bar 'fun_attos'
 		echo ""
-		echo -e "\033[1;32mINSTALANDO DEPENDENCIAS"
+		echo -e "\033[1;32mการติดตั้งขึ้นอยู่กับ"
 		echo ""
 		fun_instdep () {
 		apt-get install openvpn iptables openssl ca-certificates -y
@@ -1170,7 +1170,7 @@ exit 0' > $RCLOCAL
 		fi
 	fi
 	}
-	echo -e "\033[1;32mINSTALANDO O OPENVPN  \033[1;31m(\033[1;33mPODE DEMORAR!\033[1;31m)"
+	echo -e "\033[1;32mการติดตั้ง OPENVPN \033[1;31m(\033[1;33mอาจใช้เวลา!\033[1;31m)"
 	echo ""
 	fun_bar 'fun_dep'
 	# And finally, restart OpenVPN
@@ -1193,7 +1193,7 @@ exit 0' > $RCLOCAL
 	fi
 	}
 	echo ""
-	echo -e "\033[1;32mREINICIANDO O OPENVPN"
+	echo -e "\033[1;32mกำลังรีเซ็ต OPENVPN"
 	echo ""
 	fun_bar 'fun_ropen'
 	# Try to detect a NATed connection and ask about it to potential LowEndSpirit users
@@ -1227,7 +1227,7 @@ float" > /etc/openvpn/client-common.txt
 	# Generates the custom client.ovpn
 	newclient "SSHPLUS"
 	echo ""
-	echo -e "\033[1;32mOPENVPN INSTALADO COM SUCESSO\033[0m"
+	echo -e "\033[1;32mOPENVPN ติดตั้งสำเร็จแล้ว\033[0m"
 fi
 sed -i '$ i\echo 1 > /proc/sys/net/ipv4/ip_forward' /etc/rc.local
 sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local
@@ -1247,19 +1247,19 @@ fun_socks () {
     echo ""
     [[ $(netstat -nplt |grep 'python' | wc -l) != '0' ]] && {
         sks='\033[1;32mON'
-        var_sks1="DESATIVAR SOCKS"
+        var_sks1="ปิดการใช้งาน SOCKS"
         echo -e "\033[1;33mPORTAS\033[1;37m: \033[1;32m$(netstat -nplt |grep 'python' | awk {'print $4'} |cut -d: -f2 |xargs)"
     } || {
-        var_sks1="ATIVAR SOCKS"
+        var_sks1="เปิดใช้งาน SOCKS"
         sks='\033[1;31mOFF'
     }
     echo ""
 	echo -e "\033[1;31m[\033[1;36m1\033[1;31m] \033[1;37m• \033[1;33m$var_sks1\033[0m"
-	echo -e "\033[1;31m[\033[1;36m2\033[1;31m] \033[1;37m• \033[1;33mABRIR PORTA\033[0m"
-	echo -e "\033[1;31m[\033[1;36m3\033[1;31m] \033[1;37m• \033[1;33mALTERAR STATUS\033[0m"
-	echo -e "\033[1;31m[\033[1;36m0\033[1;31m] \033[1;37m• \033[1;33mVOLTAR\033[0m"
+	echo -e "\033[1;31m[\033[1;36m2\033[1;31m] \033[1;37m• \033[1;33mเปิดพอร์ต\033[0m"
+	echo -e "\033[1;31m[\033[1;36m3\033[1;31m] \033[1;37m• \033[1;33mเปลี่ยนสถานะ\033[0m"
+	echo -e "\033[1;31m[\033[1;36m0\033[1;31m] \033[1;37m• \033[1;33mกลับ\033[0m"
 	echo ""
-	echo -ne "\033[1;32mOQUE DESEJA FAZER \033[1;33m?\033[1;37m "; read resposta
+	echo -ne "\033[1;32mคุณต้องการทำอะไร \033[1;33m?\033[1;37m "; read resposta
 	if [[ "$resposta" = '1' ]]; then
 		if ps x | grep proxy.py|grep -v grep 1>/dev/null 2>/dev/null; then
 			clear
@@ -1275,21 +1275,21 @@ fun_socks () {
 				sleep 1
 				screen -wipe > /dev/null
 			}
-			echo -e "\033[1;32mDESATIVANDO O PROXY SOCKS\033[1;33m"
+			echo -e "\033[1;32mปิดการใช้งาน PROXY SOCKS\033[1;33m"
 			echo ""
 			fun_bar 'fun_socksoff'
 			echo ""
-			echo -e "\033[1;32mPROXY SOCKS DESATIVADO COM SUCESSO!\033[1;33m"
+			echo -e "\033[1;32mPROXY SOCKS ปิดการใช้งานสำเร็จ!\033[1;33m"
 			sleep 3
 			fun_socks
 		else
 			clear
 			echo -e "\E[44;1;37m             PROXY SOCKS              \E[0m"
 		    echo ""
-		    echo -ne "\033[1;32mQUAL PORTA DESEJA ULTILIZAR \033[1;33m?\033[1;37m: "; read porta
+		    echo -ne "\033[1;32mที่คุณต้องการใช้ \033[1;33m?\033[1;37m: "; read porta
 		    if [[ -z "$porta" ]]; then
 		    	echo ""
-		    	echo -e "\033[1;31mPorta invalida!"
+		    	echo -e "\033[1;31mพอร์ตไม่ถูกต้อง!"
 		    	sleep 3
 		    	clear
 		    	fun_conexao
@@ -1306,11 +1306,11 @@ fun_socks () {
 		        }
 		    }
 		    echo ""
-		    echo -e "\033[1;32mINICIANDO O PROXY SOCKS\033[1;33m"
+		    echo -e "\033[1;32mการเริ่มต้น PROXY SOCKS\033[1;33m"
 		    echo ""
 		    fun_bar 'fun_inisocks'
 		    echo ""
-		    echo -e "\033[1;32mPROXY SOCKS ATIVADO COM SUCESSO\033[1;33m"
+		    echo -e "\033[1;32mPROXY SOCKS เปิดใช้งานสำเร็จแล้ว\033[1;33m"
 		    sleep 3
 		    fun_socks
 		fi
@@ -1320,19 +1320,19 @@ fun_socks () {
 			clear
 			echo -e "\E[44;1;37m            PROXY SOCKS             \E[0m"
 			echo ""
-			echo -e "\033[1;33mPORTAS EM USO: \033[1;32m$sockspt"
+			echo -e "\033[1;33mพอร์ตในการใช้งาน: \033[1;32m$sockspt"
 			echo ""
-			echo -ne "\033[1;32mQUAL PORTA DESEJA ULTILIZAR \033[1;33m?\033[1;37m: "; read porta
+			echo -ne "\033[1;32mที่คุณต้องการใช้ \033[1;33m?\033[1;37m: "; read porta
 			if [[ -z "$porta" ]]; then
 				echo ""
-				echo -e "\033[1;31mPorta invalida!"
+				echo -e "\033[1;31mพอร์ตไม่ถูกต้อง!"
 				sleep 3
 				clear
 				fun_conexao
 			fi
 			verif_ptrs $porta
 			echo ""
-			echo -e "\033[1;32mINICIANDO O PROXY SOCKS NA PORTA \033[1;31m$porta\033[1;33m"
+			echo -e "\033[1;32mการเริ่มต้น PROXY SOCKS ในพอร์ต \033[1;31m$porta\033[1;33m"
 			echo ""
 			abrirptsks () {
 				sleep 1
@@ -1341,12 +1341,12 @@ fun_socks () {
 			}
 			fun_bar 'abrirptsks'
 			echo ""
-			echo -e "\033[1;32mPROXY SOCKS ATIVADO COM SUCESSO\033[1;33m"
+			echo -e "\033[1;32mPROXY SOCKS เปิดใช้งานสำเร็จแล้ว\033[1;33m"
 			sleep 3
 			fun_socks
 		else
 			clear
-			echo -e "\033[1;31mFUNCAO INDISPONIVEL\n\n\033[1;33mATIVE O SOCKS PRIMEIRO !\033[1;33m"
+			echo -e "\033[1;31mฟังก์ชั่นที่ไม่สามารถใช้ได้\n\n\033[1;33mACTIVATE SOCKS FIRST !\033[1;33m"
 			sleep 2
 			fun_socks
 		fi
@@ -1356,27 +1356,27 @@ fun_socks () {
 			msgsocks=$(cat /etc/SSHPlus/proxy.py |grep -E "MSG =" | awk -F = '{print $2}' |cut -d "'" -f 2)
 			echo -e "\E[44;1;37m             PROXY SOCKS              \E[0m"
 			echo ""
-			echo -e "\033[1;33mSTATUS: \033[1;32m$msgsocks"
+			echo -e "\033[1;33mสถานะ: \033[1;32m$msgsocks"
 			echo""
-			echo -ne "\033[1;32mINFORME SEU STATUS\033[1;31m:\033[1;37m "; read msgg
+			echo -ne "\033[1;32mแจ้งสถานะของคุณ\033[1;31m:\033[1;37m "; read msgg
 			if [[ -z "$msgg" ]]; then
 				echo ""
-				echo -e "\033[1;31mStatus invalido!"
+				echo -e "\033[1;31mสถานะไม่ถูกต้อง!"
 				sleep 3
 				fun_conexao
 			fi
-			echo -e "\n\033[1;31m[\033[1;36m01\033[1;31m]\033[1;33m AZUL"
-			echo -e "\033[1;31m[\033[1;36m02\033[1;31m]\033[1;33m VERDE"
-			echo -e "\033[1;31m[\033[1;36m03\033[1;31m]\033[1;33m VERMELHO"
-			echo -e "\033[1;31m[\033[1;36m04\033[1;31m]\033[1;33m AMARELO"
-			echo -e "\033[1;31m[\033[1;36m05\033[1;31m]\033[1;33m ROSA"
+			echo -e "\n\033[1;31m[\033[1;36m01\033[1;31m]\033[1;33m BLUE"
+			echo -e "\033[1;31m[\033[1;36m02\033[1;31m]\033[1;33m GREEN"
+			echo -e "\033[1;31m[\033[1;36m03\033[1;31m]\033[1;33m RED"
+			echo -e "\033[1;31m[\033[1;36m04\033[1;31m]\033[1;33m YELLOW"
+			echo -e "\033[1;31m[\033[1;36m05\033[1;31m]\033[1;33m ROSE"
 			echo -e "\033[1;31m[\033[1;36m06\033[1;31m]\033[1;33m CYANO"
-			echo -e "\033[1;31m[\033[1;36m07\033[1;31m]\033[1;33m LARANJA"
-			echo -e "\033[1;31m[\033[1;36m08\033[1;31m]\033[1;33m ROXO"
-			echo -e "\033[1;31m[\033[1;36m09\033[1;31m]\033[1;33m PRETO"
-			echo -e "\033[1;31m[\033[1;36m10\033[1;31m]\033[1;33m SEM COR"
+			echo -e "\033[1;31m[\033[1;36m07\033[1;31m]\033[1;33m ORANGE"
+			echo -e "\033[1;31m[\033[1;36m08\033[1;31m]\033[1;33m PURPLE"
+			echo -e "\033[1;31m[\033[1;36m09\033[1;31m]\033[1;33m BLACK"
+			echo -e "\033[1;31m[\033[1;36m10\033[1;31m]\033[1;33m WITHOUT COLOR"
 			echo ""
-			echo -ne "\033[1;32mQUAL A COR\033[1;31m ?\033[1;37m : "; read sts_cor
+			echo -ne "\033[1;32mสีอะไร\033[1;31m ?\033[1;37m : "; read sts_cor
 			if [[ "$sts_cor" = "1" ]] || [[ "$sts_cor" = "01" ]]; then
 				cor_sts='blue'
 			elif [[ "$sts_cor" = "2" ]] || [[ "$sts_cor" = "02" ]]; then
@@ -1410,7 +1410,7 @@ fun_socks () {
 
 			}
 			echo ""
-			echo -e "\033[1;32mALTERANDO STATUS!"
+			echo -e "\033[1;32mสถานะการเปลี่ยนแปลง!"
 			echo ""
 			fun_bar 'fun_msgsocks'
 			restartsocks () {
@@ -1427,27 +1427,27 @@ fun_socks () {
 				fi
 			}
 			echo ""
-			echo -e "\033[1;32mREINICIANDO PROXY SOCKS!"
+			echo -e "\033[1;32mการตั้งใหม่ PROXY SOCKS!"
 			echo ""
 			fun_bar 'restartsocks'
 			echo ""
-			echo -e "\033[1;32mSTATUS ALTERADO COM SUCESSO!"
+			echo -e "\033[1;32mเปลี่ยนสถานะเรียบร้อยแล้ว!"
 			sleep 3
 			fun_socks
 		else
 			clear
-			echo -e "\033[1;31mFUNCAO INDISPONIVEL\n\n\033[1;33mATIVE O SOCKS PRIMEIRO !\033[1;33m"
+			echo -e "\033[1;31mฟังก์ชั่นเฉพาะL\n\n\033[1;33mENGAGE SOCKS FIRST!\033[1;33m"
 			sleep 2
 			fun_socks
 		fi
 	elif [[ "$resposta" = '0' ]]; then
 		echo ""
-		echo -e "\033[1;31mRetornando...\033[0m"
+		echo -e "\033[1;31mการคืน...\033[0m"
 		sleep 2
 		fun_conexao
 	else
 		echo ""
-		echo -e "\033[1;31mOpcao invalida !\033[0m"
+		echo -e "\033[1;31mตัวเลือกไม่ถูกต้อง !\033[0m"
 		sleep 2
 		fun_socks
 	fi
@@ -1457,64 +1457,64 @@ fun_socks () {
 fun_openssh () {
 	clear
 	echo -e "\E[44;1;37m            OPENSSH             \E[0m\n"
-	echo -e "\033[1;31m[\033[1;36m1\033[1;31m] \033[1;37m• \033[1;33mADICIONAR PORTA\033[1;31m
-[\033[1;36m2\033[1;31m] \033[1;37m• \033[1;33mREMOVER PORTA\033[1;31m
-[\033[1;36m3\033[1;31m] \033[1;37m• \033[1;33mVOLTAR\033[0m"
+	echo -e "\033[1;31m[\033[1;36m1\033[1;31m] \033[1;37m• \033[1;33mเพิ่มพอร์ต\033[1;31m
+[\033[1;36m2\033[1;31m] \033[1;37m• \033[1;33mลบพอร์ต\033[1;31m
+[\033[1;36m3\033[1;31m] \033[1;37m• \033[1;33mกลับ\033[0m"
 	echo ""
-	echo -ne "\033[1;32mOQUE DESEJA FAZER \033[1;33m?\033[1;37m "; read resp
+	echo -ne "\033[1;32mคุณต้องการทำอะไร \033[1;33m?\033[1;37m "; read resp
 	if [[ "$resp" = '1' ]]; then
 		clear
-		echo -e "\E[44;1;37m         ADICIONAR PORTA AO SSH         \E[0m\n"
-		echo -ne "\033[1;32mQUAL PORTA DESEJA ADICIONAR \033[1;33m?\033[1;37m "; read pt
+		echo -e "\E[44;1;37m         เพิ่มพอร์ตไปยัง SSH        \E[0m\n"
+		echo -ne "\033[1;32mซึ่งคุณต้องการเพิ่ม \033[1;33m?\033[1;37m "; read pt
 		if [[ -z "$pt" ]]; then
-			echo -e "\n\033[1;31mPorta invalida!"
+			echo -e "\n\033[1;31mพอร์ตไม่ถูกต้อง!"
 			sleep 3
 			fun_conexao
 		fi
 		verif_ptrs $pt
-		echo -e "\n\033[1;32mADICIONANDO PORTA AO SSH\033[0m"
+		echo -e "\n\033[1;32mเพิ่มพอร์ตเข้า SSH\033[0m"
 		echo ""
 		fun_addpssh () {
 			echo "Port $pt" >> /etc/ssh/sshd_config
 			service ssh restart
 		}
 		fun_bar 'fun_addpssh'
-		echo -e "\n\033[1;32mPORTA ADICIONADA COM SUCESSO\033[0m"
+		echo -e "\n\033[1;32เพิ่มพอร์ตสำเร็จเรียบร้อยแล้ว\033[0m"
 		sleep 3
 		fun_conexao
 	elif [[ "$resp" = '2' ]]; then
 		clear
-		echo -e "\E[41;1;37m         REMOVER PORTA DO SSH         \E[0m"
-		echo -e "\n\033[1;33m[\033[1;31m!\033[1;33m] \033[1;32mPORTA PADRAO \033[1;37m22 \033[1;33mCUIDADO !\033[0m"
-		echo -e "\n\033[1;33mPORTAS EM USO: \033[1;37m$(grep 'Port' /etc/ssh/sshd_config|cut -d' ' -f2 |grep -v 'no' |xargs)\n"
-		echo -ne "\033[1;32mQUAL PORTA DESEJA REMOVER \033[1;33m?\033[1;37m "; read pt
+		echo -e "\E[41;1;37m         ลบ SSH PORT       \E[0m"
+		echo -e "\n\033[1;33m[\033[1;31m!\033[1;33m] \033[1;32mพอร์ตมาตรฐาน \033[1;37m22 \033[1;33mข้อควรระวัง !\033[0m"
+		echo -e "\n\033[1;33mพอร์ตในการใช้งาน: \033[1;37m$(grep 'Port' /etc/ssh/sshd_config|cut -d' ' -f2 |grep -v 'no' |xargs)\n"
+		echo -ne "\033[1;32mซึ่งคุณต้องการที่จะลบ \033[1;33m?\033[1;37m "; read pt
 		if [[ -z "$pt" ]]; then
-			echo -e "\n\033[1;31mPorta invalida!"
+			echo -e "\n\033[1;31mพอร์ตไม่ถูกต้อง!"
 			sleep 3
 			fun_conexao
 		fi
 		[[ $(grep -wc "$pt" '/etc/ssh/sshd_config') != '0' ]] && {
-			echo -e "\n\033[1;32mREMOVENDO PORTA DO SSH\033[0m"
+			echo -e "\n\033[1;32mการลบพอร์ต SSH\033[0m"
 			echo ""
 			fun_delpssh () {
 				sed -i "/Port $pt/d" /etc/ssh/sshd_config
 				service ssh restart
 			}
 			fun_bar 'fun_delpssh'
-			echo -e "\n\033[1;32mPORTA REMOVIDA COM SUCESSO\033[0m"
+			echo -e "\n\033[1;32mยกเลิกการลบพอร์ตเรียบร้อยแล้ว\033[0m"
 			sleep 3
 			fun_conexao
 		} || {
-			echo -e "\n\033[1;31mPorta invalida!"
+			echo -e "\n\033[1;31mพอร์ตไม่ถูกต้อง!"
 			sleep 3
 			fun_conexao
 		}
 	elif [[ "$resp" = '3' ]]; then
-		echo -e "\n\033[1;31mRetornando.."
+		echo -e "\n\033[1;31mReturning.."
 		sleep 3
 		fun_conexao
 	else
-		echo -e "\n\033[1;31mOpcao invalida!"
+		echo -e "\n\033[1;31mตัวเลือกไม่ถูกต้อง!"
 		sleep 3
 		fun_conexao
 	fi
@@ -1619,20 +1619,20 @@ echo -e "\033[1;32mSERVICO: \033[1;33mOPENSSH \033[1;32mPORTA: \033[1;37m$(grep 
 }
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo ""
-echo -e "\033[1;31m[\033[1;36m01\033[1;31m] \033[1;37m• \033[1;33mOPENSSH $sts6\033[1;31m
-[\033[1;36m02\033[1;31m] \033[1;37m• \033[1;33mSQUID PROXY $sts1\033[1;31m
-[\033[1;36m03\033[1;31m] \033[1;37m• \033[1;33mDROPBEAR $sts2\033[1;31m
-[\033[1;36m04\033[1;31m] \033[1;37m• \033[1;33mOPENVPN $sts5\033[1;31m
-[\033[1;36m05\033[1;31m] \033[1;37m• \033[1;33mPROXY SOCKS $sts4\033[1;31m
-[\033[1;36m06\033[1;31m] \033[1;37m• \033[1;33mSSL TUNNEL $sts3\033[1;31m
-[\033[1;36m07\033[1;31m] \033[1;37m• \033[1;33mSSLH MULTIPLEX $sts7\033[1;31m
-[\033[1;36m08\033[1;31m] \033[1;37m• \033[1;33mVOLTAR \033[1;32m<\033[1;33m<\033[1;31m< \033[1;31m
-[\033[1;36m00\033[1;31m] \033[1;37m• \033[1;33mSAIR \033[1;32m<\033[1;33m<\033[1;31m< \033[0m"
+echo -e "\033[1;31m[\033[1;36m01\033[1;31m] \033[1;37m• \033[1;33mInstall OPENSSH $sts6\033[1;31m
+[\033[1;36m02\033[1;31m] \033[1;37m• \033[1;33mInstall SQUID PROXY $sts1\033[1;31m
+[\033[1;36m03\033[1;31m] \033[1;37m• \033[1;33mInstall DROPBEAR $sts2\033[1;31m
+[\033[1;36m04\033[1;31m] \033[1;37m• \033[1;33mInstall OPENVPN $sts5\033[1;31m
+[\033[1;36m05\033[1;31m] \033[1;37m• \033[1;33mInstall PROXY SOCKS $sts4\033[1;31m
+[\033[1;36m06\033[1;31m] \033[1;37m• \033[1;33mInstall SSL TUNNEL $sts3\033[1;31m
+[\033[1;36m07\033[1;31m] \033[1;37m• \033[1;33mInstall SSLH MULTIPLEX $sts7\033[1;31m
+[\033[1;36m08\033[1;31m] \033[1;37m• \033[1;33mCOME BACK\033[1;32m<\033[1;33m<\033[1;31m< \033[1;31m
+[\033[1;36m00\033[1;31m] \033[1;37m• \033[1;33mGO OUT \033[1;32m<\033[1;33m<\033[1;31m< \033[0m"
 echo ""
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo ""
 tput civis
-echo -ne "\033[1;32mOQUE DESEJA FAZER \033[1;33m?\033[1;31m?\033[1;37m "; read x
+echo -ne "\033[1;32mคุณต้องการทำอะไร \033[1;33m?\033[1;31m?\033[1;37m "; read x
 tput cnorm
 clear
 case $x in

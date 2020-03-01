@@ -32,7 +32,7 @@ echo -e "\033[1;33m]\033[1;37m -\033[1;32m OK !\033[1;37m"
 tput cnorm
 }
 echo -e "\033[1;31m════════════════════════════════════════════════════\033[0m"
-tput setaf 7 ; tput setab 4 ; tput bold ; printf '%40s%s%-12s\n' "ยินดีต้อนรับสู่ SSH+OVPN+SSL+PROXY SOCKS ALLPLU MANAGER" ; tput sgr0
+tput setaf 7 ; tput setab 4 ; tput bold ; printf '%40s%s%-12s\n' "ยินดีต้อนรับสู่ SSH+OVPN+SSL+PROXY SOCKS ALLPLUS MANAGER" ; tput sgr0
 echo -e "\033[1;31m════════════════════════════════════════════════════\033[0m"
 echo ""
 echo -e "             \033[1;31mATENCAO! \033[1;33mสคริปต์ของ IRA นี้!\033[0m"
@@ -43,7 +43,7 @@ echo ""
 echo -e "\033[1;32m• \033[1;32mDICA! \033[1;33mใช้ชุดรูปแบบที่มืดในเทอร์มินัลของคุณถึง\033[0m"
 echo -e "\033[1;33m  ประสบการณ์ที่ดีกว่าและการมองเห็นของสิ่งเดียวกัน!\033[0m"
 echo ""
-echo -e "\033[1;31m≠×≠×≠×≠×≠×≠×≠×≠×[\033[1;33m • \033[1;32mSSHPLUS MANAGER\033[1;33m •\033[1;31m ]≠×≠×≠×≠×≠×≠×≠×≠×\033[0m"
+echo -e "\033[1;31m≠×≠×≠×≠×≠×≠×≠×≠×[\033[1;33m • \033[1;32mSSH+OVPN+SSL+PROXY SOCKS ALLPLUS MANAGER\033[1;33m •\033[1;31m ]≠×≠×≠×≠×≠×≠×≠×≠×\033[0m"
 echo ""
 echo -ne "\033[1;36mสร้างเป็นคีย์ฟรี[N/S]: \033[1;37m"; read x
 [[ $x = @(n|N) ]] && exit

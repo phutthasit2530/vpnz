@@ -32,7 +32,7 @@ echo -e "\033[1;33m]\033[1;37m -\033[1;32m OK !\033[1;37m"
 tput cnorm
 }
 echo -e "\033[1;31m════════════════════════════════════════════════════\033[0m"
-tput setaf 7 ; tput setab 4 ; tput bold ; printf '%40s%s%-12s\n' "ยินดีต้อนรับสู่ SSHPLUS MANAGER" ; tput sgr0
+tput setaf 7 ; tput setab 4 ; tput bold ; printf '%40s%s%-12s\n' "ยินดีต้อนรับสู่ SSH+OVPN+SSL+PROXY SOCKS ALLPLU MANAGER" ; tput sgr0
 echo -e "\033[1;31m════════════════════════════════════════════════════\033[0m"
 echo ""
 echo -e "             \033[1;31mATENCAO! \033[1;33mสคริปต์ของ IRA นี้!\033[0m"
